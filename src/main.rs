@@ -75,4 +75,6 @@ fn main() {
     let game_state = &mut GameState::from_config(&config);
     
     play(game_state);
+
+    println!("You needed {} tries!", game_state.num_tries);
 }
