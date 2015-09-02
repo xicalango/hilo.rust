@@ -1,0 +1,7 @@
+[package]
+name = "hilo"
+version = "0.1.0"
+authors = ["Alexander Weld <alexander.weld@oracle.com>"]
+
+[dependencies]
+rand = "*"
