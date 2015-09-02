@@ -14,16 +14,16 @@ struct GameConfiguration {
 }
 
 #[derive(Debug)]
-struct GameState<'a> {
-    config: &'a GameConfiguration,
+struct GameState {
+    config: GameConfiguration,
     num_tries: u32,
     number: u32,
     playing: bool
 }
 
-impl <'a>GameState<'a> {
-    fn from_config(config: &'a GameConfiguration) -> GameState<'a> {
-        let number = GameState::generate_number(config, &mut rand::thread_rng());
+impl GameState {
+    fn from_config(config: GameConfiguration) -> GameState {
+        let number = GameState::generate_number(&config, &mut rand::thread_rng());
         GameState { config: config, num_tries: 0, number: number, playing: true }
     }
 
@@ -72,8 +72,10 @@ fn play(state: &mut GameState) {
 
 fn main() {
     let config = GameConfiguration::read_from_stdin();
-    let game_state = &mut GameState::from_config(&config);
+    let game_state = &mut GameState::from_config(config);
     
+    //println!("{:?}", config); //won't compile, bc. game_state is now the owner
+
     play(game_state);
 
     println!("You needed {} tries!", game_state.num_tries);
