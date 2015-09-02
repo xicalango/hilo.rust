@@ -70,12 +70,20 @@ fn play(state: &mut GameState) {
     }
 }
 
-fn main() {
+fn initialize_game_state() -> GameState {
     let config = GameConfiguration::read_from_stdin();
-    let game_state = &mut GameState::from_config(config);
-    
-    //println!("{:?}", config); //won't compile, bc. game_state is now the owner
 
+    return GameState::from_config(config);
+    // config goes out of scope here, but owner is now the GameState object we are returning ->
+    // everything is okay
+}
+
+fn main() {
+    let game_state = &mut initialize_game_state();
+    
+    // println!("{:?}", config); 
+    // above println! statement won't compile, bc. game_state is now the owner
+    
     play(game_state);
 
     println!("You needed {} tries!", game_state.num_tries);
